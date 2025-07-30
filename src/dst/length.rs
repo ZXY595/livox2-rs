@@ -11,11 +11,11 @@ pub trait DstLength {
         T: KnownLayout + TryFromBytes + IntoBytes;
 }
 
-/// Indicates the [`DstHeader::data_len`] method
+/// Indicates the [`super::DstHeader::data_len`] method
 /// returns the length of the typed data.
 pub enum TypedLen {}
 
-/// Indicates the [`DstHeader::data_len`] method
+/// Indicates the [`super::DstHeader::data_len`] method
 /// returns the `[u8]` length of `(header + data)`,
 ///
 /// H is the header type, use to calculate the header length.
