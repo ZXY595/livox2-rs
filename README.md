@@ -17,7 +17,7 @@ receive the corresponding data packets.
 
 > [!NOTE]
 > This crate doens't provide stream methods, because the [`futures_core::Stream`] trait doesn't
-> guarantee the unique mutable access to the socket buffer between each yiled
+> guarantee the unique mutable access to the socket buffer between each yield
 > [`futures_core::Stream::Item`], and can't even return a reference.
 > 
 > Instead, to get iterate the lidar data streams, you must match the enum
