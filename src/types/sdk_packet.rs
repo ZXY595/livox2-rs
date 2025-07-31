@@ -81,11 +81,11 @@ pub enum SendType {
 #[derive(Debug, KnownLayout, Immutable, Unaligned, TryFromBytes, IntoBytes)]
 #[repr(C, packed)]
 pub struct DetectionData {
-    ret_code: u8,
-    dev_type: LivoxLidarDeviceType,
-    sn: [u8; 16],
-    lidar_ip: [u8; 4],
-    cmd_port: u16,
+    pub ret_code: u8,
+    pub dev_type: LivoxLidarDeviceType,
+    pub sn: [u8; 16],
+    pub lidar_ip: [u8; 4],
+    pub cmd_port: u16,
 }
 
 #[derive(Debug, Clone, Copy, KnownLayout, Immutable, Unaligned, TryFromBytes, IntoBytes)]

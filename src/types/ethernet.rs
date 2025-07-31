@@ -60,12 +60,12 @@ pub enum PointData {
 #[derive(Debug, KnownLayout, Immutable, Unaligned, TryFromBytes, IntoBytes)]
 #[repr(C, packed)]
 pub struct ImuRawPoint {
-    pub(crate) gyro_x: f32,
-    pub(crate) gyro_y: f32,
-    pub(crate) gyro_z: f32,
-    pub(crate) acc_x: f32,
-    pub(crate) acc_y: f32,
-    pub(crate) acc_z: f32,
+    pub gyro_x: f32,
+    pub gyro_y: f32,
+    pub gyro_z: f32,
+    pub acc_x: f32,
+    pub acc_y: f32,
+    pub acc_z: f32,
 }
 
 /// Cartesian coordinate data with high precision.
@@ -73,13 +73,13 @@ pub struct ImuRawPoint {
 #[repr(C, packed)]
 pub struct CartesianHighRawPoint {
     /// X axis, Unit:mm
-    pub(crate) x: i32,
+    pub x: i32,
     /// Y axis, Unit:mm
-    pub(crate) y: i32,
+    pub y: i32,
     /// Z axis, Unit:mm
-    pub(crate) z: i32,
-    pub(crate) reflectivity: u8,
-    pub(crate) tag: u8,
+    pub z: i32,
+    pub reflectivity: u8,
+    pub tag: u8,
 }
 
 /// Cartesian coordinate data with low precision.
@@ -87,22 +87,22 @@ pub struct CartesianHighRawPoint {
 #[repr(C, packed)]
 pub struct CartesianLowRawPoint {
     /// X axis, Unit:cm
-    pub(crate) x: i16,
+    pub x: i16,
     /// Y axis, Unit:cm
-    pub(crate) y: i16,
+    pub y: i16,
     /// Z axis, Unit:cm
-    pub(crate) z: i16,
-    pub(crate) reflectivity: u8,
-    pub(crate) tag: u8,
+    pub z: i16,
+    pub reflectivity: u8,
+    pub tag: u8,
 }
 
 /// Spherical coordinate data.
 #[derive(Debug, KnownLayout, Immutable, Unaligned, TryFromBytes, IntoBytes)]
 #[repr(C, packed)]
 pub struct SphericalRawPoint {
-    pub(crate) depth: u32,
-    pub(crate) theta: u16,
-    pub(crate) phi: u16,
-    pub(crate) reflectivity: u8,
-    pub(crate) tag: u8,
+    pub depth: u32,
+    pub theta: u16,
+    pub phi: u16,
+    pub reflectivity: u8,
+    pub tag: u8,
 }

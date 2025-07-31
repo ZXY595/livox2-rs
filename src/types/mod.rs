@@ -46,14 +46,14 @@ pub enum LidarStatus {
 
 #[repr(C)]
 pub struct AsyncControlResponse {
-    ret_code: u8,
-    error_key: u16,
+    pub ret_code: u8,
+    pub error_key: u16,
 }
 
 #[repr(C)]
 pub struct InfoResponse {
-    ret_code: u8,
-    lidar_info: *const ffi::c_char,
+    pub ret_code: u8,
+    pub lidar_info: *const ffi::c_char,
 }
 
 #[repr(C)]
@@ -76,142 +76,133 @@ pub enum WorkModeAfterBoot {
 }
 
 
-#[expect(unused)]
 pub struct DirectLidarStateInfo {
-    pcl_data_type: u8,                      // 0x0000
-    pattern_mode: u8,                       // 0x0001
-    dual_emit_en: u8,                       // 0x0002
-    point_send_en: u8,                      // 0x0003
-    lidar_ipcfg: LivoxLidarIpInfo,          // 0x0004
-    host_state_info: HostStateInfoIpInfo,   // 0x0005
-    pointcloud_host_ipcfg: HostPointIPInfo, // 0x0006
-    imu_host_ipcfg: HostImuDataIPInfo,      // 0x0007
-    ctl_host_ipcfg: LivoxIpCfg,             // 0x0008
-    log_host_ipcfg: LivoxIpCfg,             // 0x0009
+    pub pcl_data_type: u8,                      // 0x0000
+    pub pattern_mode: u8,                       // 0x0001
+    pub dual_emit_en: u8,                       // 0x0002
+    pub point_send_en: u8,                      // 0x0003
+    pub lidar_ipcfg: LivoxLidarIpInfo,          // 0x0004
+    pub host_state_info: HostStateInfoIpInfo,   // 0x0005
+    pub pointcloud_host_ipcfg: HostPointIPInfo, // 0x0006
+    pub imu_host_ipcfg: HostImuDataIPInfo,      // 0x0007
+    pub ctl_host_ipcfg: LivoxIpCfg,             // 0x0008
+    pub log_host_ipcfg: LivoxIpCfg,             // 0x0009
 
-    vehicle_speed: i32,                          // 0x0010
-    environment_temp: i32,                       // 0x0011
-    install_attitude: LivoxLidarInstallAttitude, // 0x0012
-    blind_spot_set: u32,                         // 0x0013
-    frame_rate: u8,                              // 0x0014
-    fov_cfg0: FovCfg,                            // 0x0015
-    fov_cfg1: FovCfg,                            // 0x0016
-    fov_cfg_en: u8,                              // 0x0017
-    detect_mode: u8,                             // 0x0018
-    func_io_cfg: [u8; 4],                        // 0x0019
-    work_tgt_mode: u8,                           // 0x001A
-    glass_heat: u8,                              // 0x001B
-    imu_data_en: u8,                             // 0x001C
-    fusa_en: u8,                                 // 0x001D
+    pub vehicle_speed: i32,                          // 0x0010
+    pub environment_temp: i32,                       // 0x0011
+    pub install_attitude: LivoxLidarInstallAttitude, // 0x0012
+    pub blind_spot_set: u32,                         // 0x0013
+    pub frame_rate: u8,                              // 0x0014
+    pub fov_cfg0: FovCfg,                            // 0x0015
+    pub fov_cfg1: FovCfg,                            // 0x0016
+    pub fov_cfg_en: u8,                              // 0x0017
+    pub detect_mode: u8,                             // 0x0018
+    pub func_io_cfg: [u8; 4],                        // 0x0019
+    pub work_tgt_mode: u8,                           // 0x001A
+    pub glass_heat: u8,                              // 0x001B
+    pub imu_data_en: u8,                             // 0x001C
+    pub fusa_en: u8,                                 // 0x001D
 
-    sn: [u8; 16],              // 0x8000
-    product_info: [u8; 64],    // 0x8001
-    version_app: [u8; 4],      // 0x8002
-    version_loader: [u8; 4],   // 0x8003
-    version_hardware: [u8; 4], // 0x8004
-    mac: [u8; 6],              // 0x8005
-    cur_work_state: u8,        // 0x8006
-    core_temp: i32,            // 0x8007
-    powerup_cnt: u32,          // 0x8008
-    local_time_now: u64,       // 0x8009
-    last_sync_time: u64,       // 0x800A
-    time_offset: i64,          // 0x800B
-    time_sync_type: u8,        // 0x800C
-    status_code: [u8; 32],     // 0x800D
-    lidar_diag_status: u16,    // 0x800E
-    lidar_flash_status: u8,    // 0x800F
-    fw_type: u8,               // 0x8010
-    hms_code: u32,             // 0x8011
-    roi_mode: u8,              // 0xFFFE
+    pub sn: [u8; 16],              // 0x8000
+    pub product_info: [u8; 64],    // 0x8001
+    pub version_app: [u8; 4],      // 0x8002
+    pub version_loader: [u8; 4],   // 0x8003
+    pub version_hardware: [u8; 4], // 0x8004
+    pub mac: [u8; 6],              // 0x8005
+    pub cur_work_state: u8,        // 0x8006
+    pub core_temp: i32,            // 0x8007
+    pub powerup_cnt: u32,          // 0x8008
+    pub local_time_now: u64,       // 0x8009
+    pub last_sync_time: u64,       // 0x800A
+    pub time_offset: i64,          // 0x800B
+    pub time_sync_type: u8,        // 0x800C
+    pub status_code: [u8; 32],     // 0x800D
+    pub lidar_diag_status: u16,    // 0x800E
+    pub lidar_flash_status: u8,    // 0x800F
+    pub fw_type: u8,               // 0x8010
+    pub hms_code: u32,             // 0x8011
+    pub roi_mode: u8,              // 0xFFFE
 }
 
-#[expect(unused)]
 pub struct LivoxLidarIpInfo {
     /// IP address.
-    ip_addr: [u8; 16],
+    pub ip_addr: [u8; 16],
     /// Subnet mask.
-    net_mask: [u8; 16],
+    pub net_mask: [u8; 16],
     /// Gateway address.
-    gw_addr: [u8; 16],
+    pub gw_addr: [u8; 16],
 }
 
-#[expect(unused)]
 pub struct HostStateInfoIpInfo {
     /// IP address.
-    host_ip_addr: [u8; 16],
-    host_state_info_port: u16,
-    lidar_state_info_port: u16,
+    pub host_ip_addr: [u8; 16],
+    pub host_state_info_port: u16,
+    pub lidar_state_info_port: u16,
 }
 
-#[expect(unused)]
 pub struct HostPointIPInfo {
     /// IP address.
-    host_ip_addr: [u8; 16],
-    host_point_data_port: u16,
-    lidar_point_data_port: u16,
+    pub host_ip_addr: [u8; 16],
+    pub host_point_data_port: u16,
+    pub lidar_point_data_port: u16,
 }
 
-#[expect(unused)]
 pub struct HostImuDataIPInfo {
     /// IP address.
-    host_ip_addr: [u8; 16],
+    pub host_ip_addr: [u8; 16],
     /// resv
-    host_imu_data_port: u16,
+    pub host_imu_data_port: u16,
     /// resv
-    lidar_imu_data_port: u16,
+    pub lidar_imu_data_port: u16,
 }
 
-#[expect(unused)]
 pub struct LivoxIpCfg {
     /// IP address.
-    ip_addr: [u8; 16],
-    dst_port: u16,
-    src_port: u16,
+    pub ip_addr: [u8; 16],
+    pub dst_port: u16,
+    pub src_port: u16,
 }
 
-#[expect(unused)]
 pub struct LivoxLidarStateInfo {
-    pcl_data_type: u8,
-    pattern_mode: u8,
-    dual_emit_en: u8,
-    point_send_en: u8,
-    lidar_ip_info: LivoxLidarIpInfo,
-    host_point_ip_info: HostPointIPInfo,
-    host_imu_ip_info: HostImuDataIPInfo,
-    install_attitude: LivoxLidarInstallAttitude,
-    blind_spot_set: u32,
-    work_mode: u8,
-    glass_heat: u8,
-    imu_data_en: u8,
-    fusa_en: u8,
-    sn: [u8; 16],
-    product_info: [u8; 64],
-    version_app: [u8; 4],
-    version_load: [u8; 4],
-    version_hardware: [u8; 4],
-    mac: [u8; 6],
-    cur_work_state: u8,
-    status_code: u64,
+    pub pcl_data_type: u8,
+    pub pattern_mode: u8,
+    pub dual_emit_en: u8,
+    pub point_send_en: u8,
+    pub lidar_ip_info: LivoxLidarIpInfo,
+    pub host_point_ip_info: HostPointIPInfo,
+    pub host_imu_ip_info: HostImuDataIPInfo,
+    pub install_attitude: LivoxLidarInstallAttitude,
+    pub blind_spot_set: u32,
+    pub work_mode: u8,
+    pub glass_heat: u8,
+    pub imu_data_en: u8,
+    pub fusa_en: u8,
+    pub sn: [u8; 16],
+    pub product_info: [u8; 64],
+    pub version_app: [u8; 4],
+    pub version_load: [u8; 4],
+    pub version_hardware: [u8; 4],
+    pub mac: [u8; 6],
+    pub cur_work_state: u8,
+    pub status_code: u64,
 }
 
-#[expect(unused)]
 pub struct LivoxLidarInstallAttitude {
-    roll_deg: f32,
-    pitch_deg: f32,
-    yaw_deg: f32,
+    pub roll_deg: f32,
+    pub pitch_deg: f32,
+    pub yaw_deg: f32,
     /// mm
-    x: i32,
+    pub x: i32,
     /// mm
-    y: i32,
+    pub y: i32,
     /// mm
-    z: i32,
+    pub z: i32,
 }
 
-#[expect(unused)]
 pub struct FovCfg {
-    yaw_start: i32,
-    yaw_stop: i32,
-    pitch_start: i32,
-    pitch_stop: i32,
-    rsvd: u32,
+    pub yaw_start: i32,
+    pub yaw_stop: i32,
+    pub pitch_start: i32,
+    pub pitch_stop: i32,
+    pub rsvd: u32,
 }
