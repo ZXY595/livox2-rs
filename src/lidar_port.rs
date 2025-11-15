@@ -1,8 +1,7 @@
-//! This module contains the [`LidarStream`] trait with various implementors
-//! and the related LidarConfig struct.
+//! This module contains the configurations and data ports for the lidar devices.
 //!
-//! The lidar streams can be created by calling their new method
-//! or calling the [`LidarStream::from_config`] method.
+//! The lidar ports can be created by calling their new method
+//! or using configuration helper functions.
 use std::net::Ipv4Addr;
 
 pub mod detection;

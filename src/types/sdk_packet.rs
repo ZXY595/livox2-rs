@@ -178,10 +178,12 @@ pub struct QueryDeviceTypeAck {
     /// LiDAR IP address
     ///
     /// E.g: AA.BB.CC.DD
+    /// ```text
     /// lidar_ip[0] = AA
     /// lidar_ip[1] = BB
     /// lidar_ip[2] = CC
     /// lidar_ip[3] = DD
+    /// ```
     pub lidar_ip: [u8; 4],
     /// LiDAR command port
     pub cmd_port: u16,

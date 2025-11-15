@@ -23,7 +23,7 @@ pub struct EthernetPacketHeader {
     pub frame_cnt: u8,
     /// Data type. For details, see [`2.3 Data Types`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#Data-Types).
     pub data_type: PointDataType,
-    /// Timestamp type. For details, see [`2.2 Timestamp]`(https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#Timestamp).
+    /// Timestamp type. For details, see [`2.2 Timestamp`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#Timestamp).
     pub time_type: u8,
     /// Reserved.
     pub reserved: [u8; 12],
