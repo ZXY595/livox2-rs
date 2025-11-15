@@ -1,25 +1,39 @@
 [package]
 name = "livox2"
-version = "0.1.1"
+version = "0.2.0"
 edition = "2024"
 authors = ["ZXY595 <3303057136@qq.com>"]
 description = "A lightweight and pure Rust implementation of Livox SDK2, based on async-net and zerocopy."
 license = "MIT"
 repository = "https://github.com/ZXY595/livox2-rs"
 
+[[example]]
+name = "lidar_detection"
+path = "example/lidar_detection.rs"
+
+[[example]]
+name = "point_data"
+path = "example/point_data.rs"
+
+[[example]]
+name = "imu"
+path = "example/imu.rs"
+
 [dependencies]
-async-net = "2.0"
+async-net = { version = "2.0", optional = true }
 crc = "3.3"
 futures-core = "0.3"
 futures-lite = "2.6"
-macro_rules_attribute = "0.2"
 thiserror = "2.0"
-tuple_list = "0.1.3"
-zerocopy = {version = "0.8", features = ["derive", "std"]}
+tokio = { version = "1.48", default-features = false, features = ["net"], optional = true }
+zerocopy = { version = "0.8", features = ["derive", "std"], optional = true }
 
 [dev-dependencies]
 smol = "2.0"
 
 [features]
-default = ["simd"]
+default = ["async-net", "simd"]
+async-net = ["dep:async-net", "dep:zerocopy"]
 simd = ["zerocopy/simd"]
+# io-uring = ["tokio/io-uring"] # planning
+# tokio = ["dep:tokio"] # planning

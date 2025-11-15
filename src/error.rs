@@ -1,4 +1,5 @@
 use std::{
+    fmt::Display,
     io::{self, ErrorKind},
     ops::Deref,
 };
@@ -9,30 +10,33 @@ use zerocopy::{CastError, KnownLayout, SizeError, TryCastError, TryFromBytes};
 pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Debug, Error)]
-pub enum Error {
-    #[error("Invalid data: {0}")]
-    InvalidData(std::io::Error),
-
-    #[error("Invalid input: {0}")]
-    InvalidInput(std::io::Error),
+#[error(transparent)]
+pub struct Error {
+    #[from]
+    source: std::io::Error,
 }
 
 impl Error {
     pub fn invalid_size(expect: usize, found: usize) -> Self {
-        let source = io::Error::new(
-            ErrorKind::InvalidInput,
+        io::Error::new(
+            ErrorKind::InvalidData,
             format!("Invalid size: expected {expect}, found {found}."),
-        );
-        Self::InvalidInput(source)
+        )
+        .into()
+    }
+    pub fn unknown_type(expect: impl Display, found: impl Display) -> Self {
+        io::Error::new(
+            ErrorKind::InvalidData,
+            format!("unknown_type: expected {expect}, found {found}."),
+        )
+        .into()
     }
 }
 
 impl From<Error> for std::io::Error {
     fn from(value: Error) -> Self {
-        match value {
-            Error::InvalidData(e) => e,
-            Error::InvalidInput(e) => e,
-        }
+        let Error { source } = value;
+        source
     }
 }
 
@@ -42,8 +46,7 @@ where
     Dst: KnownLayout,
 {
     fn from(error: SizeError<Src, Dst>) -> Self {
-        let source = io::Error::new(ErrorKind::InvalidInput, error.to_string());
-        Self::InvalidInput(source)
+        io::Error::new(ErrorKind::InvalidData, error.to_string()).into()
     }
 }
 
@@ -53,13 +56,7 @@ where
     Dst: TryFromBytes + KnownLayout + ?Sized,
 {
     fn from(error: TryCastError<Src, Dst>) -> Self {
-        let (kind, msg) = match error {
-            TryCastError::Size(e) => (ErrorKind::InvalidInput, e.to_string()),
-            TryCastError::Validity(e) => (ErrorKind::InvalidData, e.to_string()),
-            TryCastError::Alignment(e) => (ErrorKind::InvalidData, e.to_string()),
-        };
-        let source = io::Error::new(kind, msg);
-        Self::InvalidData(source)
+        io::Error::new(ErrorKind::InvalidData, error.to_string()).into()
     }
 }
 
@@ -69,11 +66,6 @@ where
     Dst: TryFromBytes + KnownLayout + ?Sized,
 {
     fn from(error: CastError<Src, Dst>) -> Self {
-        let (kind, msg) = match error {
-            CastError::Size(e) => (ErrorKind::InvalidInput, e.to_string()),
-            CastError::Alignment(e) => (ErrorKind::InvalidData, e.to_string()),
-        };
-        let source = io::Error::new(kind, msg);
-        Self::InvalidData(source)
+        io::Error::new(ErrorKind::InvalidData, error.to_string()).into()
     }
 }
