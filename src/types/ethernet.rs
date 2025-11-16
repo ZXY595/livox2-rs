@@ -21,16 +21,16 @@ pub struct EthernetPacketHeader {
     /// Point cloud frame count, plus 1 for each frame of point cloud (10Hz/15Hz, etc.);
     /// For non-repeating scans, this field is invalid.
     pub frame_cnt: u8,
-    /// Data type. For details, see [`2.3 Data Types`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#Data-Types).
+    /// Data type. For details, see [`2.3 Data Types`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#data-types).
     pub data_type: PointDataType,
-    /// Timestamp type. For details, see [`2.2 Timestamp`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#Timestamp).
+    /// Timestamp type. For details, see [`2.2 Timestamp`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#timestamp).
     pub time_type: u8,
     /// Reserved.
     pub reserved: [u8; 12],
     /// Timestamp + data segment check code, using CRC-32 algorithm.
-    /// For details, see [`6 CRC Algorithm`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#CRC-Algorithm).
+    /// For details, see [`6 CRC Algorithm`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#crc-algorithm).
     pub crc32: u32,
-    /// Point cloud timestamp. For details, see [`2.2 Timestamp`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#Timestamp).
+    /// Point cloud timestamp. For details, see [`2.2 Timestamp`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#timestamp).
     pub timestamp: [u8; 8],
 }
 
@@ -59,7 +59,7 @@ impl Display for PointDataType {
     }
 }
 
-#[derive(Debug, KnownLayout, Immutable, Unaligned, TryFromBytes, IntoBytes)]
+#[derive(Debug, Clone, KnownLayout, Immutable, Unaligned, TryFromBytes, IntoBytes)]
 #[repr(C, packed)]
 pub struct ImuData {
     /// Unit: rad/s
@@ -77,7 +77,7 @@ pub struct ImuData {
 }
 
 /// Cartesian coordinate data with high precision.
-#[derive(Debug, KnownLayout, Immutable, Unaligned, TryFromBytes, IntoBytes)]
+#[derive(Debug, Clone, KnownLayout, Immutable, Unaligned, TryFromBytes, IntoBytes)]
 #[repr(C, packed)]
 pub struct CartesianHighPoint {
     /// X axis, Unit:mm
@@ -93,7 +93,7 @@ pub struct CartesianHighPoint {
 }
 
 /// Cartesian coordinate data with low precision.
-#[derive(Debug, KnownLayout, Immutable, Unaligned, TryFromBytes, IntoBytes)]
+#[derive(Debug, Clone, KnownLayout, Immutable, Unaligned, TryFromBytes, IntoBytes)]
 #[repr(C, packed)]
 pub struct CartesianLowPoint {
     /// X axis, Unit:cm
@@ -109,7 +109,7 @@ pub struct CartesianLowPoint {
 }
 
 /// Spherical coordinate data.
-#[derive(Debug, KnownLayout, Immutable, Unaligned, TryFromBytes, IntoBytes)]
+#[derive(Debug, Clone, KnownLayout, Immutable, Unaligned, TryFromBytes, IntoBytes)]
 #[repr(C, packed)]
 pub struct SphericalPoint {
     /// Unit: mm

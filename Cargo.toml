@@ -5,6 +5,7 @@ edition = "2024"
 authors = ["ZXY595 <3303057136@qq.com>"]
 description = "A lightweight and pure Rust implementation of Livox SDK2, based on async-net and zerocopy."
 license = "MIT"
+keywords = ["Livox", "driver", "lidar", "SDK", "SLAM"]
 repository = "https://github.com/ZXY595/livox2-rs"
 
 [[example]]

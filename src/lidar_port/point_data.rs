@@ -82,13 +82,14 @@ impl super::LidarPortConfig {
     }
 }
 
+#[derive(Debug)]
 pub struct PointPacketRef<'a> {
     pub header: &'a EthernetPacketHeader,
-    pub data: CoordinateData<'a>,
+    pub data: CoordinateDataRef<'a>,
 }
 
 #[derive(Debug)]
-pub enum CoordinateData<'a> {
+pub enum CoordinateDataRef<'a> {
     CartesianHigh(&'a [CartesianHighPoint]),
     CartesianLow(&'a [CartesianLowPoint]),
     Spherical(&'a [SphericalPoint]),
@@ -98,12 +99,12 @@ impl<'a> PointPacketRef<'a> {
     pub fn try_from_bytes(source: &'a [u8]) -> Result<Self, crate::Error> {
         let (header, data) = EthernetPacketHeader::try_ref_from_prefix(source)?;
         let dot_num = header.dot_num as usize;
-        let data = CoordinateData::try_from_bytes_with_elems(data, header.data_type, dot_num)?;
+        let data = CoordinateDataRef::try_from_bytes_with_elems(data, header.data_type, dot_num)?;
         Ok(Self { header, data })
     }
 }
 
-impl<'a> CoordinateData<'a> {
+impl<'a> CoordinateDataRef<'a> {
     pub fn try_from_bytes_with_elems(
         source: &'a [u8],
         data_type: PointDataType,
@@ -112,15 +113,15 @@ impl<'a> CoordinateData<'a> {
         let data = match data_type {
             PointDataType::CartesianCoordinateHighData => {
                 <[CartesianHighPoint]>::try_ref_from_bytes_with_elems(source, count)
-                    .map(CoordinateData::CartesianHigh)?
+                    .map(CoordinateDataRef::CartesianHigh)?
             }
             PointDataType::CartesianCoordinateLowData => {
                 <[CartesianLowPoint]>::try_ref_from_bytes_with_elems(source, count)
-                    .map(CoordinateData::CartesianLow)?
+                    .map(CoordinateDataRef::CartesianLow)?
             }
             PointDataType::SphericalCoordinateData => {
                 <[SphericalPoint]>::try_ref_from_bytes_with_elems(source, count)
-                    .map(CoordinateData::Spherical)?
+                    .map(CoordinateDataRef::Spherical)?
             }
             PointDataType::ImuData => {
                 return Err(crate::Error::unknown_type(

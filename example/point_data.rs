@@ -1,4 +1,4 @@
-use livox2::lidar_port::{IpConfig, point_data::CoordinateData};
+use livox2::lidar_port::{IpConfig, point_data::CoordinateDataRef};
 
 fn main() -> Result<(), std::io::Error> {
     smol::block_on(async {
@@ -8,13 +8,13 @@ fn main() -> Result<(), std::io::Error> {
         let packet = point_port.next_packet_ref().await?;
         dbg!(packet.header);
         match packet.data {
-            CoordinateData::CartesianHigh(cartesian_high_points) => {
+            CoordinateDataRef::CartesianHigh(cartesian_high_points) => {
                 dbg!(&cartesian_high_points[..5]);
             }
-            CoordinateData::CartesianLow(cartesian_low_points) => {
+            CoordinateDataRef::CartesianLow(cartesian_low_points) => {
                 dbg!(&cartesian_low_points[..5]);
             }
-            CoordinateData::Spherical(spherical_points) => {
+            CoordinateDataRef::Spherical(spherical_points) => {
                 dbg!(&spherical_points[..5]);
             }
         }

@@ -120,6 +120,7 @@ impl LidarSearchCmdPacket {
     }
 }
 
+#[derive(Debug)]
 pub struct LidarSearchAckRef<'a> {
     pub header: &'a SdkPacketHeader,
     pub data: &'a QueryDeviceTypeAck,

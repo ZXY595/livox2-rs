@@ -40,9 +40,9 @@ pub struct SdkPacketHeader {
     pub sender_type: SendType,
     pub reserved: [u8; 6],
     /// Frame header checksum, check data starts from sof to crc16 (not included),
-    /// 18 bytes in total. For details, see [`6 CRC Algorithm`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#CRC-Algorithm).
+    /// 18 bytes in total. For details, see [`6 CRC Algorithm`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#crc-algorithm).
     pub crc16_h: u16,
-    /// Frame data checksum. For details, see [`6 CRC Algorithm`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#CRC-Algorithm);
+    /// Frame data checksum. For details, see [`6 CRC Algorithm`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#crc-algorithm);
     /// When length of data field is 0, CRC32 needs to be padded with 0.
     pub crc32_d: u32,
 }
@@ -169,7 +169,7 @@ pub enum SendType {
 #[repr(C, packed)]
 pub struct QueryDeviceTypeAck {
     /// Return code
-    /// For details, see [`5 Return Code Description`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#5-Return-Code-Description)
+    /// For details, see [`5 Return Code Description`](https://livox-wiki-en.readthedocs.io/en/latest/tutorials/new_product/mid360/livox_eth_protocol_mid360.html#return-code-description)
     pub ret_code: u8,
     /// LiDAR type
     pub dev_type: LivoxLidarDeviceType,
