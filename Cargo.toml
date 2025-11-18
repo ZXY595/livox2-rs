@@ -1,11 +1,11 @@
 [package]
 name = "livox2"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2024"
 authors = ["ZXY595 <3303057136@qq.com>"]
 description = "A lightweight and pure Rust implementation of Livox SDK2, based on async-net and zerocopy."
 license = "MIT"
-keywords = ["Livox", "driver", "lidar", "SDK", "SLAM"]
+keywords = ["Livox", "SDK", "SLAM", "driver", "lidar"]
 repository = "https://github.com/ZXY595/livox2-rs"
 
 [[example]]
@@ -23,6 +23,7 @@ path = "example/imu.rs"
 [dependencies]
 async-net = { version = "2.0", optional = true }
 crc = "3.3"
+fugit = { version = "0.3", optional = true }
 futures-core = "0.3"
 futures-lite = "2.6"
 thiserror = "2.0"
@@ -35,6 +36,7 @@ smol = "2.0"
 [features]
 default = ["async-net", "simd"]
 async-net = ["dep:async-net", "dep:zerocopy"]
+fugit = ["dep:fugit"]
 simd = ["zerocopy/simd"]
 # io-uring = ["tokio/io-uring"] # planning
 # tokio = ["dep:tokio"] # planning

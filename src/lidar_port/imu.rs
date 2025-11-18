@@ -1,6 +1,7 @@
 use std::io;
 
 use async_net::{AsyncToSocketAddrs, UdpSocket};
+use futures_core::Stream;
 use zerocopy::TryFromBytes;
 
 use crate::types::ethernet::{EthernetPacketHeader, ImuData, PointDataType};
@@ -33,6 +34,23 @@ impl ImuPort {
         let buffer = self.buffer.as_mut();
         let len = self.socket.recv(buffer).await?;
         ImuPacketRef::try_from_bytes(&buffer[..len]).map_err(From::from)
+    }
+
+    /// Returns a stream and using the given closure to map each packet to an item.
+    ///
+    /// Note that the returned stream does not implement the [`Unpin`],
+    /// so you need to [`pin`](std::pin::pin) it if you want to consume it.
+    pub fn into_stream<Item>(
+        self,
+        f: impl FnMut(ImuPacketRef) -> Item,
+    ) -> impl Stream<Item = Item> {
+        futures_lite::stream::unfold((self, f), |(mut port, mut f)| async {
+            port.next_packet_ref()
+                .await
+                .map(&mut f)
+                .map(|item| (item, (port, f)))
+                .ok()
+        })
     }
 }
 

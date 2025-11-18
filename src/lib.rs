@@ -11,15 +11,6 @@
 //! Once you have the device port instances, you can call [`next_packet_ref`](lidar_port::PointDataPort::next_packet_ref) method to
 //! receive the corresponding data packets.
 //!
-//! # Note
-//! This crate doens't provide stream methods by default, because the [`futures_core::Stream`] trait doesn't
-//! guarantee the unique mutable access to the socket buffer between each yield
-//! [`futures_core::Stream::Item`], and can't even return a reference.
-//!
-//! Instead, to get iterate the lidar data streams, you must match the packet data first, like:
-//! [`CoordinateData`](lidar_port::point_data::CoordinateData), take the inner array slice, then
-//! iterate this array slice to read the data.
-//!
 //! # Example
 //! See also [example](https://github.com/ZXY595/livox2-rs/tree/main/example)
 

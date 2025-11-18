@@ -1,6 +1,7 @@
 use std::io;
 
 use async_net::{AsyncToSocketAddrs, UdpSocket};
+use futures_core::Stream;
 use zerocopy::TryFromBytes;
 
 use crate::{
@@ -41,6 +42,23 @@ impl PointDataPort {
         let len = self.socket.recv(buffer).await?;
         PointPacketRef::try_from_bytes(&buffer[..len]).map_err(From::from)
     }
+
+    /// Returns a stream and using the given closure to map each packet to an item.
+    ///
+    /// Note that the returned stream does not implement the [`Unpin`],
+    /// so you need to [`pin`](std::pin::pin) it if you want to consume it.
+    pub fn into_stream<Item>(
+        self,
+        f: impl FnMut(PointPacketRef) -> Item,
+    ) -> impl Stream<Item = Item> {
+        futures_lite::stream::unfold((self, f), |(mut port, mut f)| async {
+            port.next_packet_ref()
+                .await
+                .map(&mut f)
+                .map(|item| (item, (port, f)))
+                .ok()
+        })
+    }
 }
 
 impl SocketPortConfig {
@@ -67,7 +85,7 @@ impl super::IpConfig {
     }
     pub async fn new_default_point_data_port(&self) -> Result<PointDataPort, io::Error> {
         self.new_point_data_port(
-            &SocketPortConfig::new_imu_port_config(),
+            &SocketPortConfig::new_point_data_config(),
             PointDataPort::DEFAULT_BUFFER_INIT_SIZE,
         )
         .await
@@ -90,6 +108,7 @@ pub struct PointPacketRef<'a> {
 
 #[derive(Debug)]
 pub enum CoordinateDataRef<'a> {
+    /// the default data type
     CartesianHigh(&'a [CartesianHighPoint]),
     CartesianLow(&'a [CartesianLowPoint]),
     Spherical(&'a [SphericalPoint]),
