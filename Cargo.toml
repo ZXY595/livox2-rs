@@ -2,23 +2,11 @@
 name = "livox2"
 version = "0.2.2"
 edition = "2024"
-authors = ["ZXY595 <3303057136@qq.com>"]
 description = "A lightweight and pure Rust implementation of Livox SDK2, based on async-net and zerocopy."
 license = "MIT"
 keywords = ["Livox", "SDK", "SLAM", "driver", "lidar"]
 repository = "https://github.com/ZXY595/livox2-rs"
-
-[[example]]
-name = "lidar_detection"
-path = "example/lidar_detection.rs"
-
-[[example]]
-name = "point_data"
-path = "example/point_data.rs"
-
-[[example]]
-name = "imu"
-path = "example/imu.rs"
+categories = ["hardware-support", "network-programming"]
 
 [dependencies]
 async-net = { version = "2.0", optional = true }
